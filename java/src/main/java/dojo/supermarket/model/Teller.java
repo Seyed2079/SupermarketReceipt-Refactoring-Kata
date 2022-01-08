@@ -28,12 +28,13 @@ public class Teller {
 
     private void addProductToReceipt(Receipt receipt, List<ProductQuantity> productQuantities) {
         for (ProductQuantity pq: productQuantities) {
-            Product p = pq.getProduct();
-            double quantity = pq.getQuantity();
-            double unitPrice = this.catalog.getUnitPrice(p);
-            double price = quantity * unitPrice;
-            receipt.addProduct(p, quantity, unitPrice, price);
+            double price = getPrice(pq.getQuantity(), this.catalog.getUnitPrice(pq.getProduct()));
+            receipt.addProduct(pq.getProduct(), pq.getQuantity(), this.catalog.getUnitPrice(pq.getProduct()), price);
         }
+    }
+
+    private double getPrice(double quantity, double unitPrice) {
+        return quantity * unitPrice;
     }
 
 }
