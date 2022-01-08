@@ -35,11 +35,9 @@ public class ShoppingCart {
 
     void handleOffers(Receipt receipt, Map<Product, Offer> offers, SupermarketCatalog catalog) {
         for (Product p: productQuantities().keySet()) {
-            double quantity = productQuantities.get(p);
             if (offers.containsKey(p)) {
                 Offer offer = offers.get(p);
-                double unitPrice = catalog.getUnitPrice(p);
-                Discount discount = getDiscount(p, offer, quantity, unitPrice);
+                Discount discount = handleDiscount(p, offer, catalog);
                 if (discount != null)
                     receipt.addDiscount(discount);
             }
@@ -47,7 +45,9 @@ public class ShoppingCart {
         }
     }
 
-    public Discount getDiscount(Product product, Offer offer, double quantity, double unitPrice) {
+    public Discount handleDiscount(Product product, Offer offer,SupermarketCatalog catalog) {
+        double quantity = productQuantities.get(product);
+        double unitPrice = catalog.getUnitPrice(product);
         int quantityAsInt = (int) quantity;
         Discount discount = null;
         DiscountCalculator discountCalculator = new DiscountCalculator();
