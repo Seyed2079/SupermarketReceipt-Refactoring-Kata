@@ -27,14 +27,18 @@ public class DiscountCalculator {
     public Discount getDiscountForTwoForAmount(double quantity, double unitPrice, int quantityAsInt, int x) {
         Discount discount = null;
         if (quantityAsInt >= 2) {
-            int intDivision = quantityAsInt / x;
-            double pricePerUnit = getPricePerUnit(intDivision);
-            double theTotal = (quantityAsInt % 2) * unitPrice;
-            double total = pricePerUnit + theTotal;
-            double discountN = unitPrice * quantity - total;
+            double discountN = calculateDiscountN(quantity, unitPrice, quantityAsInt, x);
             discount = new Discount(product, "2 for " + offer.argument, -discountN);
         }
         return discount;
+    }
+
+    private double calculateDiscountN(double quantity, double unitPrice, int quantityAsInt, int x) {
+        int intDivision = quantityAsInt / x;
+        double pricePerUnit = getPricePerUnit(intDivision);
+        double theTotal = (quantityAsInt % 2) * unitPrice;
+        double total = pricePerUnit + theTotal;
+        return unitPrice * quantity - total;
     }
 
     private double getPricePerUnit(int intDivision) {
