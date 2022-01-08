@@ -39,12 +39,24 @@ public class ShoppingCart {
             if (offers.containsKey(p)) {
                 Offer offer = offers.get(p);
                 double unitPrice = catalog.getUnitPrice(p);
-                Discount discount = offer.getDiscount(quantity, unitPrice);
+                Discount discount = getDiscount(p, offer, quantity, unitPrice);
                 if (discount != null)
                     receipt.addDiscount(discount);
             }
 
         }
+    }
+
+    public Discount getDiscount(Product product, Offer offer, double quantity, double unitPrice) {
+        int quantityAsInt = (int) quantity;
+        Discount discount = null;
+        DiscountCalculator discountCalculator = new DiscountCalculator();
+        discountCalculator.setOffer(offer);
+        discountCalculator.setProduct(product);
+        discountCalculator.setQuantity(quantity);
+        discountCalculator.setUnitPrice(unitPrice);
+        discount = discountCalculator.execute();
+        return discount;
     }
 
 }
