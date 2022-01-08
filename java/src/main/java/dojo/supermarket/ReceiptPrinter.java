@@ -67,13 +67,17 @@ public class ReceiptPrinter {
     private String formatLineWithWhitespace(String name, String value) {
         StringBuilder line = new StringBuilder();
         line.append(name);
-        int whitespaceSize = this.columns - name.length() - value.length();
+        int whitespaceSize = getWhitespaceSize(name, value);
         for (int i = 0; i < whitespaceSize; i++) {
             line.append(" ");
         }
         line.append(value);
         line.append('\n');
         return line.toString();
+    }
+
+    private int getWhitespaceSize(String name, String value) {
+        return this.columns - name.length() - value.length();
     }
 
     private static String presentPrice(double price) {
