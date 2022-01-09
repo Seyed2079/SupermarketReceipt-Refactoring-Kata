@@ -17,14 +17,13 @@ public class Offer {
     }
 
 
-    public Discount handleDiscount(Product product, SupermarketCatalog catalog, ShoppingCart shoppingCart) {
-        double quantity = shoppingCart.productQuantities.get(product);
-        double unitPrice = catalog.getUnitPrice(product);
+    public Discount handleDiscount(SupermarketCatalog catalog, double quantity) {
+        double unitPrice = catalog.getUnitPrice(this.product);
         int quantityAsInt = (int) quantity;
         Discount discount = null;
         DiscountCalculator discountCalculator = new DiscountCalculator();
         discountCalculator.setOffer(this);
-        discountCalculator.setProduct(product);
+        discountCalculator.setProduct(this.product);
         discountCalculator.setQuantity(quantity);
         discountCalculator.setUnitPrice(unitPrice);
         discount = discountCalculator.execute();

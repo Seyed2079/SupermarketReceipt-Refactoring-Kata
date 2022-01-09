@@ -37,7 +37,7 @@ public class ShoppingCart {
         for (Product p: productQuantities().keySet()) {
             if (offers.containsKey(p)) {
                 Offer offer = offers.get(p);
-                Discount discount = offer.handleDiscount(p, catalog, this);
+                Discount discount = offer.handleDiscount(catalog, productQuantities.get(p));
                 if (discount != null)
                     receipt.addDiscount(discount);
             }
